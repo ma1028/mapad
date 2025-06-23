@@ -1,37 +1,77 @@
 # Documentation: https://haobogu.github.io/rmk/keyboard_configuration.html
 [keyboard]
-name = "RMK Keyboard"
-product_name = "RMK Keyboard"
-vendor_id = 0x4c4b
-product_id = 0x4643
-manufacturer = "haobo"
-chip = "rp2040"
+name = "mapad"
+product_name = "mapad"
+vendor_id = 0xFEED
+product_id = 0x6060
+manufacturer = "mark1028"
+chip = "nrf52840"
+usb_enable = true
 
 [matrix]
 # Input and output pins are mandatory
-input_pins = ["PIN_6", "PIN_7", "PIN_8", "PIN_9"]
-output_pins = ["PIN_19", "PIN_20", "PIN_21"]
+input_pins = ["P1_09", "P0_13", "P1_02", "P0_10", "P0_09"]
+output_pins = ["P0_17", "P0_24", "P0_05", "P0_29", "P0_02", "P1_13"]
 # WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
-# row2col = true
+# col2row = true
 
 [layout]
-rows = 4
-cols = 3
-layers = 2
-keymap = [
-    [
-        ["A", "B", "C"],
-        ["Kc1", "Kc2", "Kc3"],
-        ["LCtrl", "MO(1)", "LShift"],
-        ["OSL(1)", "LT(2, Kc9)", "LM(1, LShift | LGui)"]
-    ],
-    [
-        ["_", "TT(1)", "TG(2)"],
-        ["_", "_", "_"],
-        ["_", "_", "_"],
-        ["_", "_", "_"]
-    ],
-]
+rows = 6
+cols = 5
+layers = 4
+matrix_map = """
+(0,0) (0,1) (0,2) (0,3) (0,4)
+      (1,1) (1,2) (1,3) (1,4)
+(2,0) (2,1) (2,2) (2,3) (2,4)
+      (3,1) (3,2) (3,3) (3,4)
+      (4,1) (4,2) (4,3) (4,4)
+(5,0) (5,1) (5,2) (5,3) (5,4)
+"""
+
+# layer 0 :
+[[layer]]
+name = "default_layer" #optional name for the layer
+keys = """
+Insert Escape  Tab     Space      Backspace
+       NumLock KpSlash KpAsterisk KpMinus
+Pause  Kp7     Kp8     Kp9        KpPlus
+       Kp4     Kp5     Kp6        KpPlus 
+       Kp1     Kp2     Kp3        KpEnter
+Delete Kp0     Kp0     KpDot      KpEnter
+"""
+# layer 1 :
+[[layer]]
+name = "Photoshop_layer" #optional name for the layer
+keys = """
+Insert Escape  Tab     Space      Backspace
+       NumLock KpSlash KpAsterisk KpMinus
+Pause  Kp7     Kp8     Kp9        KpPlus
+       Kp4     Kp5     Kp6        KpPlus 
+       Kp1     Kp2     Kp3        KpEnter
+Delete Kp0     Kp0     KpDot      KpEnter
+"""
+# layer 2 :
+[[layer]]
+name = "eda_layer" #optional name for the layer
+keys = """
+Insert Escape  Tab     Space      Backspace
+       NumLock KpSlash KpAsterisk KpMinus
+Pause  Kp7     Kp8     Kp9        KpPlus
+       Kp4     Kp5     Kp6        KpPlus 
+       Kp1     Kp2     Kp3        KpEnter
+Delete Kp0     Kp0     KpDot      KpEnter
+"""
+# layer 3 :
+[[layer]]
+name = "davinci_layer" #optional name for the layer
+keys = """
+Insert Escape  Tab     Space      Backspace
+       NumLock KpSlash KpAsterisk KpMinus
+Pause  Kp7     Kp8     Kp9        KpPlus
+       Kp4     Kp5     Kp6        KpPlus 
+       Kp1     Kp2     Kp3        KpEnter
+Delete Kp0     Kp0     KpDot      KpEnter
+"""
 
 [light]
 # All light pins are high-active by default, uncomment if you want it to be low-active
@@ -43,8 +83,47 @@ keymap = [
 # numslock.pin = "PA5"
 # numslock.low_active = true
 
-
+[ble]
+enabled = true
+battery_adc_pin = "P0_04"
+charge_state.pin = "P0_07"
+charge_state.low_active = true
+charge_led.pin = "P0_08"
+charge_led.low_active = false
+adc_divider_measured = 2000
+adc_divider_total = 2820
 
 [storage]
 # Storage feature is enabled by default
 # enabled = false
+
+# Encoder 0
+[[input_device.encoder]]
+pin_a = "P0_15"
+pin_b = "P0_12"
+phase = "resolution" # 分辨率选项，此项为自定义分辨率
+resolution = 10      # 自定义分辨率
+reverse = true       # 旋转方向：反向
+
+# Encoder 1
+[[input_device.encoder]]
+pin_a = "P0_30"
+pin_b = "P0_31"
+phase = "resolution" 
+resolution = 10
+reverse = true
+
+# Encoder 2
+[[input_device.encoder]]
+pin_a = "P0_28"
+pin_b = "P0_03"
+phase = "resolution"
+resolution = 10
+reverse = true 
+
+# Whether to use the MCU's internal pull-up resistor, default to false 是否使用MCU的内部上拉电阻，默认为false
+internal_pullup = true  # 使用mcu内部上拉电阻
+
+[rmk]
+# The number of available BLE profiles 配对蓝牙设备的数量
+ble_profiles_num = 3
